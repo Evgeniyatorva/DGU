@@ -171,8 +171,8 @@ body {
   outline: none; }
 
 .header-img {
-  margin-top: 90px;
-  margin-left: -100px; }
+  margin-top: 85px;
+  margin-left: -105px; }
   @media only screen and (max-width: 1299px) {
     .header-img {
       margin-top: 60px;
@@ -184,6 +184,11 @@ body {
   .header-img img {
     position: relative;
     z-index: 100; }
+    @media only screen and (max-width: 1425px) {
+    .header-img img {
+        width: 100%; }
+    }
+
     @media only screen and (max-width: 1199px) {
       .header-img img {
         width: 422px;
