@@ -723,7 +723,7 @@ body {
         -o-transition: text-indent 0.3s ease;
         transition: text-indent 0.3s ease; }
       .section .form-action input[type=submit] {
-        margin: 0 auto;
+        margin: 22px auto 0;
         background-color: #4b67ba;
         font-family: Roboto, sans-serif;
         font-weight: 500;
@@ -748,7 +748,7 @@ body {
       width: 363px;
       display: block;
       line-height: 40px;
-      margin-bottom: 22px;
+      margin-top: 22px;
       -webkit-box-shadow: none;
               box-shadow: none;
       resize: none;
@@ -1128,3 +1128,15 @@ h1 {
   -webkit-transition: opacity 0.4s ease 0.4s;
   -o-transition: opacity 0.4s ease 0.4s;
   transition: opacity 0.4s ease 0.4s; }
+.form-name-error, .form-phone-error, .form-consultation-name-error, .form-consultation-phone-error {
+    color: red;
+    font-size:24px;
+}
+#submit-ajax {
+    color: black;
+    font-size:26px;
+}
+
+.display-none {
+    display:none;
+}

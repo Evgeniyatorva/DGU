@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="Ремонт и обслуживание ДГУ | Ремонт дизельных генераторных установок любой сложности | качественное ТО | пуско-наладочные работы | телефоны: +375 25 605-75-17 +375 29 394-60-45 | быстрый отклик на интересующие вопросы | выезд по всей РБ"/>
+  <link rel="shortcut icon" type="image/ico" href="favicon.ico"/>
   <link rel="stylesheet" href="css/main.css">
   <title>Ремонт и обслуживание дизельных генераторных установок по всей РБ</title>
 </head>
@@ -185,10 +187,13 @@
               </div>
               <form action="post" class="consultation-form">
                 <h3>Заполните форму и получите бесплатную<br /> консультацию по вашей проблеме</h3>
-                <input type="text" placeholder="Ваше имя">
-                <input type="tel" placeholder="Ваш номер телефона">
-                <input type="submit" value="получить консультацию">
+                <input type="text" placeholder="Ваше имя" name="name" class="form-consultation-name">
+                <span class="form-consultation-name-error"></span>
+                <input type="text" placeholder="Ваш номер телефона" name="phone" class="form-consultation-phone">
+                <span class="form-consultation-phone-error"></span>
+                <input type="submit" value="получить консультацию" class="submit-consultation-button">
               </form>
+              <span id="submit-ajax-consultation"></span>
             </div>
           </div>
         </div>
@@ -345,12 +350,15 @@
             <div class="form">
               <form action="post" class="form-action">
                 <h3>Сообщите нам о Вашей проблеме<br /> и наш мастер приедет к Вам на дом</h3>
-                <input type="text" placeholder="Ваше имя">
-                <input type="text" placeholder="Ваш номер телефона">
-                <input type="text" placeholder="Ваш адрес">
-                <textarea rows="5" placeholder="Ваша неисправность"></textarea>
-                <input type="submit" value="Отправить">
+                <input type="text" placeholder="Ваше имя" name="name" class="form-name">
+                <span class="form-name-error"></span>
+                <input type="text" placeholder="Ваш номер телефона" name="phone" class="form-phone">
+                <span class="form-phone-error"></span>
+                <input type="text" placeholder="Ваш адрес" name="address" class="form-address">
+                <textarea rows="5" placeholder="Ваша неисправность" name="problem" class="form-problem"></textarea>
+                <input type="submit" value="Отправить" class="submit-button">
               </form>
+              <span id="submit-ajax"></span>
             </div>
           </div>
         </div>
@@ -393,5 +401,82 @@
 <script src="js/jquery.bxslider.min.js"></script>
 <script src="js/jquery-ui.min.js"></script>
 <script src="js/main.js"></script>
+
+  <script>
+    $(".submit-button").on("click", function (event) {
+      event.preventDefault();
+      var name = $(".form-name").val();
+      var phone = $(".form-phone").val();
+      var address = $(".form-address").val();
+      var problem = $(".form-problem").val();
+      
+      if (name === '') {
+          $(".form-name-error").html('введите имя');
+          return false
+      }else {
+          $(".form-name-error").html('');
+      }
+      if (phone === '') {
+          $(".form-phone-error").html('введите номер телефона');
+          return false
+      }else {
+          $(".form-phone-error").html('');
+      }
+      
+      if (name !== '' && phone !== ''){
+          $.ajax({
+            url: "/mail.php",
+            method: 'post',
+            data: {
+                action: 'ajax_order',
+                name: name,
+                phone: phone,
+                address: address,
+                problem: problem
+            },
+            success: function (response) {
+                $('#submit-ajax').html(response);
+                $('.form-action').addClass('display-none');
+            }
+        });
+      }      
+    });
+
+    $(".submit-consultation-button").on("click", function (event) {
+      event.preventDefault();
+      var name = $(".form-consultation-name").val();
+      var phone = $(".form-consultation-phone").val();
+      
+      if (name === '') {
+          $(".form-consultation-name-error").html('введите имя');
+          return false
+      }else {
+          $(".form-consultation-name-error").html('');
+      }
+      if (phone === '') {
+          $(".form-consultation-phone-error").html('введите номер телефона');
+          return false
+      }else {
+          $(".form-consultation-phone-error").html('');
+      }
+      
+      if (name !== '' && phone !== ''){
+          $.ajax({
+            url: "mail.php",
+            method: 'post',
+            data: {
+                action: 'ajax_order',
+                name: name,
+                phone: phone
+            },
+            success: function (response) {
+                $('#submit-ajax-consultation').html(response);
+                $('.consultation-form').addClass('display-none');
+            }
+          });
+      }
+    });
+  
+  </script>
 
 </html>
